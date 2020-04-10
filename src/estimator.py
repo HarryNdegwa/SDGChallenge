@@ -25,7 +25,7 @@ class Estimator(object):
 
     self.decimal_places = decimal.Decimal("0.01")
 
-    self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
+    self.available_beds = math.ceil(0.35*self.input_data.get("totalHospitalBeds"))
 
     self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]
 
