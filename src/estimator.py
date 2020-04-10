@@ -27,7 +27,11 @@ class Estimator(object):
 
     self.available_beds = math.ceil(0.35*self.input_data.get("totalHospitalBeds"))
 
-    self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]
+    if self.input_data["region"]["avgDailyIncomePopulation"] >= 1:
+      self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]/100
+    else:
+      self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]
+
 
     self.average_daily_income = self.input_data["region"]["avgDailyIncomeInUSD"]
 
