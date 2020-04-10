@@ -10,6 +10,8 @@ class Estimator(object):
       self.input_data = {}
 
     self.reported_cases = self.input_data.get("reportedCases")
+    # to set the factor instance variable
+    self.period_factor_calculator()
 
 
   def get_current_infected_estimation(self):
@@ -52,6 +54,12 @@ class Estimator(object):
   def get_projected_number_of_infections(self):
     current_infections_estimation = self.get_current_infected_estimation()
     return current_infections_estimation*(2**self.factor) 
+
+
+  def get_projected_number_of_severe_infections(self):
+    current_severe_infections_estimation = self.get_severe_current_infected_estimation()
+    return current_severe_infections_estimation*(2**self.factor)
+
 
 
 
