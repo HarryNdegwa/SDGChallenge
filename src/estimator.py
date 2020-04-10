@@ -135,4 +135,28 @@ class Estimator(object):
 
 
 def estimator(data):
+  input_data = data
+  my_estimator = Estimator(input_data)
+  data = {
+    "data":input_data,
+    "impact":{
+      "currentlyInfected":my_estimator.get_current_infected_estimation(),
+      "infectionsByRequestedTime":my_estimator.get_projected_number_of_infections(),
+      "severeCasesByRequestedTime":my_estimator.get_infection_cases_to_hospitalize_estimation(),
+      "hospitalBedsByRequestedTime":my_estimator.get_available_beds_for_infection_cases(),
+      "casesForICUByRequestedTime":my_estimator.get_infection_cases_to_require_icu(),
+      "casesForVentilatorsByRequestedTime":my_estimator.get_infection_cases_to_require_ventilators(),
+      "dollarsInFlight":my_estimator.get_money_economy_is_likely_to_loose_on_infections()
+    },
+    "severeImpact":{
+      "currentlyInfected":my_estimator.get_severe_current_infected_estimation(),
+      "infectionsByRequestedTime":my_estimator.get_projected_number_of_severe_infections(),
+      "severeCasesByRequestedTime":my_estimator.get_projected_infection_cases_to_hospitalize_estimation(),
+      "hospitalBedsByRequestedTime":my_estimator.get_available_beds_for_projected_infection_cases(),
+      "casesForICUByRequestedTime":my_estimator.get_projected_infection_cases_to_require_icu(),
+      "casesForVentilatorsByRequestedTime":my_estimator.get_projected_infection_cases_to_require_ventilators(),
+      "dollarsInFlight":my_estimator.get_money_economy_is_likely_to_loose_on_projected_infections()
+    }
+  }
   return data
+
