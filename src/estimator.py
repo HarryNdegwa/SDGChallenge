@@ -61,6 +61,12 @@ class Estimator(object):
     return current_severe_infections_estimation*(2**self.factor)
 
 
+  def get_infection_cases_to_hospitalize_estimation(self):
+    projected_infections_estimation = self.get_projected_number_of_infections()
+    return math.floor(0.15*projected_infections_estimation)
+
+
+
 
 
 
