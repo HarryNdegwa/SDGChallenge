@@ -1,3 +1,5 @@
+import math,decimal
+
 
 class Estimator(object):
 
@@ -39,6 +41,12 @@ class Estimator(object):
     elif str(period_type).casefold() == months.casefold():
       return elapse_time*days_in_a_month
 
+
+  def period_factor_calculator(self):
+    infections_to_double_period_in_days = 3
+    days = self.period_normaliser_to_days()
+    factor = math.floor(days/infections_to_double_period_in_days)
+    return factor
 
 
 
