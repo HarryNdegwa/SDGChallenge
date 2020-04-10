@@ -45,14 +45,13 @@ class Estimator(object):
   def period_factor_calculator(self):
     infections_to_double_period_in_days = 3
     days = self.period_normaliser_to_days()
-    factor = math.floor(days/infections_to_double_period_in_days)
-    return factor
+    self.factor = math.floor(days/infections_to_double_period_in_days)
+    return self.factor
 
 
-
-
-
-
+  def get_projected_number_of_infections(self):
+    current_infections_estimation = self.get_current_infected_estimation()
+    return current_infections_estimation*(2**self.factor) 
 
 
 
