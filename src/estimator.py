@@ -22,26 +22,23 @@ class Estimator(object):
     return 0
 
 
+  def period_normaliser_to_days(self):
+    days = "days"
+    weeks = "weeks"
+    months = "months"
+    days_in_a_week = 7
+    days_in_a_month = 30
 
-payload = {
-    "region":{
-        "name":"Africa",
-        "avgAge":19.7,
-        "avgDailyIncomeInUSD":5,
-        "avgDailyIncomePopulation":0.71
-    },
-    "periodType":"Days",
-    "timeToElapse":58,
-    "reportedCases":674,
-    "population":66622705,
-    "totalHospitalBeds":1380614
-}
+    period_type = self.input_data.get("periodType")
+    elapse_time = self.input_data.get("timeToElapse")
 
+    if str(period_type).casefold() == days.casefold():
+      return elapse_time
+    elif str(period_type).casefold() == weeks.casefold():
+      return elapse_time*days_in_a_week
+    elif str(period_type).casefold() == months.casefold():
+      return elapse_time*days_in_a_month
 
-e = Estimator(payload)
-
-print(e.get_current_infected_estimation())
-print(e.get_severe_current_infected_estimation())
 
 
 
