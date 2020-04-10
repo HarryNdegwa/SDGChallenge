@@ -103,7 +103,7 @@ class Estimator(object):
     return math.floor(0.05*projected_infections_estimation)
 
 
-  def get_severe_infection_cases_to_require_icu(self):
+  def get_projected_infection_cases_to_require_icu(self):
     projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
     return math.floor(0.05*projected_severe_infections_estimation)
 
