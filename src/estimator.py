@@ -80,7 +80,7 @@ class Estimator(object):
     return math.floor(0.15*projected_infections_estimation)
 
 
-  def get_severe_infection_cases_to_hospitalize_estimation(self):
+  def get_projected_infection_cases_to_hospitalize_estimation(self):
     projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
     return math.floor(0.15*projected_severe_infections_estimation)
 
@@ -93,7 +93,7 @@ class Estimator(object):
 
 
   def get_available_beds_for_severe_infection_cases(self):
-    to_hospitalize_estimation = self.get_severe_infection_cases_to_hospitalize_estimation()
+    to_hospitalize_estimation = self.get_projected_infection_cases_to_hospitalize_estimation()
     if self.available_beds >= to_hospitalize_estimation:
       return self.available_beds
     return self.available_beds - to_hospitalize_estimation
