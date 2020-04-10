@@ -92,7 +92,7 @@ class Estimator(object):
     return self.available_beds - to_hospitalize_estimation
 
 
-  def get_available_beds_for_severe_projected_cases(self):
+  def get_available_beds_for_severe_infection_cases(self):
     to_hospitalize_estimation = self.get_projected_infection_cases_to_hospitalize_estimation()
     if self.available_beds >= to_hospitalize_estimation:
       return self.available_beds
