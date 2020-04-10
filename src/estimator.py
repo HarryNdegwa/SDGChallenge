@@ -17,8 +17,15 @@ class Estimator(object):
     # sets the factor instance variable
     self.period_factor_calculator()
 
-    self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
+    # sets projected_infections_estimation instance variable
+    self.get_projected_number_of_infections()
 
+    # sets projected_severe_infections_estimation instance variable
+    self.get_projected_number_of_severe_infections()
+
+    self.decimal_places = decimal.Decimal("0.01")
+
+    self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
 
     self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]
 
@@ -67,22 +74,22 @@ class Estimator(object):
 
   def get_projected_number_of_infections(self):
     current_infections_estimation = self.get_current_infected_estimation()
-    return current_infections_estimation*(2**self.factor) 
+    self.projected_infections_estimation = current_infections_estimation*(2**self.factor)
+    return self.projected_infections_estimation 
 
 
   def get_projected_number_of_severe_infections(self):
     current_severe_infections_estimation = self.get_severe_current_infected_estimation()
-    return current_severe_infections_estimation*(2**self.factor)
+    self.projected_severe_infections_estimation = current_severe_infections_estimation*(2**self.factor)
+    return self.projected_severe_infections_estimation
 
 
   def get_infection_cases_to_hospitalize_estimation(self):
-    projected_infections_estimation = self.get_projected_number_of_infections()
-    return math.floor(0.15*projected_infections_estimation)
+    return math.floor(0.15*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_hospitalize_estimation(self):
-    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
-    return math.floor(0.15*projected_severe_infections_estimation)
+    return math.floor(0.15*self.projected_severe_infections_estimation)
 
 
   def get_available_beds_for_infection_cases(self):
@@ -99,45 +106,29 @@ class Estimator(object):
     return self.available_beds - to_hospitalize_estimation
 
   def get_infection_cases_to_require_icu(self):
-    projected_infections_estimation = self.get_projected_number_of_infections()
-    return math.floor(0.05*projected_infections_estimation)
+    return math.floor(0.05*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_require_icu(self):
-    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
-    return math.floor(0.05*projected_severe_infections_estimation)
+    return math.floor(0.05*self.projected_severe_infections_estimation)
 
 
   def get_infection_cases_to_require_ventilators(self):
-    projected_infections_estimation = self.get_projected_number_of_infections()
-    return math.floor(0.02*projected_infections_estimation)
+    return math.floor(0.02*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_require_ventilators(self):
-    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
-    return math.floor(0.02*projected_severe_infections_estimation)
+    return math.floor(0.02*self.projected_severe_infections_estimation)
 
 
   def get_money_economy_is_likely_to_loose_on_infections(self):
-    projected_infections_estimation = self.get_projected_number_of_infections()
-    decimal_places = decimal.Decimal("0.01")
-    amount = decimal.Decimal(projected_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
-    return str(amount.quantize(decimal_places))
+    amount = decimal.Decimal(self.projected_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
+    return str(amount.quantize(self.decimal_places))
 
 
   def get_money_economy_is_likely_to_loose_on_projected_infections(self):
-    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
-    decimal_places = decimal.Decimal("0.01")
-    amount = decimal.Decimal(projected_severe_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
-    return str(amount.quantize(decimal_places))
-
-
-
-
-
-
-
-
+    amount = decimal.Decimal(self.projected_severe_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
+    return str(amount.quantize(self.decimal_places))
 
 
 
