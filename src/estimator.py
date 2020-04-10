@@ -16,6 +16,11 @@ class Estimator(object):
     self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
 
 
+    self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]
+
+    self.average_daily_income = self.input_data["region"]["avgDailyIncomeInUSD"]
+
+
   def get_current_infected_estimation(self):
     if self.reported_cases != None:
       return self.reported_cases*10
@@ -101,7 +106,12 @@ class Estimator(object):
     return math.floor(0.02*projected_infections_estimation)
 
 
+  def get_severe_infection_cases_to_require_ventilators(self):
+    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
+    return math.floor(0.02*projected_severe_infections_estimation)
 
+
+  
 
 
 
