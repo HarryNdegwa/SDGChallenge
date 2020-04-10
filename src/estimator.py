@@ -12,11 +12,14 @@ class Estimator(object):
     reported_cases = self.input_data.get("reportedCases")
     if reported_cases != None:
       return reported_cases*10
-    else:
-      return 0
+    return 0
 
 
-
+  def get_severe_current_infected_estimation(self):
+    reported_cases = self.input_data.get("reportedCases")
+    if reported_cases != None:
+      return reported_cases*50
+    return 0
 
 
 
