@@ -125,6 +125,17 @@ class Estimator(object):
     return str(amount.quantize(decimal_places))
 
 
+  def get_money_economy_is_likely_to_loose_on_projected_infections(self):
+    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
+    decimal_places = decimal.Decimal("0.01")
+    amount = decimal.Decimal(projected_severe_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
+    return str(amount.quantize(decimal_places))
+
+
+
+
+
+
 
 
 
