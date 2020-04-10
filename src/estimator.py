@@ -86,7 +86,9 @@ class Estimator(object):
       return self.available_beds
     return self.available_beds - to_hospitalize_estimation
 
-
+  def get_infection_cases_to_require_icu(self):
+    projected_infections_estimation = self.get_projected_number_of_infections()
+    return math.floor(0.05*projected_infections_estimation)
 
 
 
