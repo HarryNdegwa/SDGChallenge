@@ -10,7 +10,11 @@ class Estimator(object):
       self.input_data = {}
 
     self.reported_cases = self.input_data.get("reportedCases")
-    # to set the factor instance variable
+
+    # sets the day instance variable
+    self.period_normaliser_to_days()
+
+    # sets the factor instance variable
     self.period_factor_calculator()
 
     self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
@@ -44,11 +48,14 @@ class Estimator(object):
     elapse_time = self.input_data.get("timeToElapse")
 
     if str(period_type).casefold() == days.casefold():
-      return elapse_time
+      self.days = elapse_time
+      return self.days
     elif str(period_type).casefold() == weeks.casefold():
-      return elapse_time*days_in_a_week
+      self.days = elapse_time*days_in_a_week
+      return self.days
     elif str(period_type).casefold() == months.casefold():
-      return elapse_time*days_in_a_month
+      self.days = elapse_time*days_in_a_month
+      return self.days
 
 
   def period_factor_calculator(self):
@@ -111,7 +118,12 @@ class Estimator(object):
     return math.floor(0.02*projected_severe_infections_estimation)
 
 
-  
+  def get_money_economy_is_likely_to_loose_on_infections(self):
+    projected_infections_estimation = self.get_projected_number_of_infections()
+    decimal_places = decimal.Decimal("0.01")
+    amount = decimal.Decimal(projected_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
+    return str(amount.quantize(decimal_places))
+
 
 
 
