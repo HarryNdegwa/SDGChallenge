@@ -13,6 +13,8 @@ class Estimator(object):
     # to set the factor instance variable
     self.period_factor_calculator()
 
+    self.available_beds = math.floor(0.35*self.input_data.get("totalHospitalBeds"))
+
 
   def get_current_infected_estimation(self):
     if self.reported_cases != None:
@@ -66,6 +68,14 @@ class Estimator(object):
     return math.floor(0.15*projected_infections_estimation)
 
 
+  def get_severe_infection_cases_to_hospitalize_estimation(self):
+    projected_severe_infections_estimation = self.get_projected_number_of_severe_infections()
+    return math.floor(0.15*projected_severe_infections_estimation)
+
+
+  def get_available_beds_for_infection_cases(self):
+    to_hospitalize_estimation = self.get_infection_cases_to_hospitalize_estimation()
+    return self.available_beds - to_hospitalize_estimation
 
 
 
