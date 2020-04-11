@@ -1,4 +1,4 @@
-import math,decimal
+import math
 
 
 class Estimator(object):
@@ -23,9 +23,7 @@ class Estimator(object):
     # sets projected_severe_infections_estimation instance variable
     self.get_projected_number_of_severe_infections()
 
-    self.decimal_places = decimal.Decimal("0.01")
-
-    self.available_beds = math.ceil(0.35*self.input_data.get("totalHospitalBeds"))
+    self.available_beds = int(0.35*self.input_data.get("totalHospitalBeds"))
 
     if self.input_data["region"]["avgDailyIncomePopulation"] >= 1:
       self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]/100
@@ -72,7 +70,7 @@ class Estimator(object):
   def period_factor_calculator(self):
     infections_to_double_period_in_days = 3
     days = self.period_normaliser_to_days()
-    self.factor = math.floor(days/infections_to_double_period_in_days)
+    self.factor = days//infections_to_double_period_in_days
     return self.factor
 
 
@@ -89,11 +87,11 @@ class Estimator(object):
 
 
   def get_infection_cases_to_hospitalize_estimation(self):
-    return math.floor(0.15*self.projected_infections_estimation)
+    return int(0.15*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_hospitalize_estimation(self):
-    return math.floor(0.15*self.projected_severe_infections_estimation)
+    return int(0.15*self.projected_severe_infections_estimation)
 
 
   def get_available_beds_for_infection_cases(self):
@@ -110,29 +108,29 @@ class Estimator(object):
     return self.available_beds - to_hospitalize_estimation
 
   def get_infection_cases_to_require_icu(self):
-    return math.floor(0.05*self.projected_infections_estimation)
+    return int(0.05*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_require_icu(self):
-    return math.floor(0.05*self.projected_severe_infections_estimation)
+    return int(0.05*self.projected_severe_infections_estimation)
 
 
   def get_infection_cases_to_require_ventilators(self):
-    return math.floor(0.02*self.projected_infections_estimation)
+    return int(0.02*self.projected_infections_estimation)
 
 
   def get_projected_infection_cases_to_require_ventilators(self):
-    return math.floor(0.02*self.projected_severe_infections_estimation)
+    return int(0.02*self.projected_severe_infections_estimation)
 
 
   def get_money_economy_is_likely_to_loose_on_infections(self):
-    amount = decimal.Decimal(self.projected_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
-    return str(amount.quantize(self.decimal_places))
+    amount = (self.projected_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income)//self.days
+    return int(amount)
 
 
   def get_money_economy_is_likely_to_loose_on_projected_infections(self):
-    amount = decimal.Decimal(self.projected_severe_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income*self.days)
-    return str(amount.quantize(self.decimal_places))
+    amount = (self.projected_severe_infections_estimation*self.majority_earning_population_fraction*self.average_daily_income)//self.days
+    return int(amount)
 
 
 
@@ -163,5 +161,7 @@ def estimator(data):
     }
   }
   return data
+
+
 
 
