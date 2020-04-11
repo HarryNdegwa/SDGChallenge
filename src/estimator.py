@@ -23,7 +23,7 @@ class Estimator(object):
     # sets projected_severe_infections_estimation instance variable
     self.get_projected_number_of_severe_infections()
 
-    self.available_beds = int(0.35*self.input_data.get("totalHospitalBeds"))
+    self.available_beds = math.ceil(0.35*self.input_data.get("totalHospitalBeds"))
 
     if self.input_data["region"]["avgDailyIncomePopulation"] >= 1:
       self.majority_earning_population_fraction = self.input_data["region"]["avgDailyIncomePopulation"]/100
